@@ -1,0 +1,97 @@
+{
+  "emitter": "dotnet",
+  "image": "mcr.microsoft.com/dotnet/sdk:10.0.403",
+  "tools": {
+    "dotnet": "10.0.403",
+    "coverlet": "coverlet.msbuild and coverlet.collector 10.1.0 (pinned in tests/Sample.Tests.csproj)",
+    "dotnet-coverage": "18.12.0+e67518936dc54d459b37375c5eef5dc89f05d535"
+  },
+  "steps": [
+    {
+      "cwd": "/work/dotnet",
+      "command": "bash -c ../gen-big.sh cs > src/Sample/Big.cs"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "dotnet build -v q tests/Sample.Tests"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "dotnet test --no-build -v q tests/Sample.Tests /p:CollectCoverage=true /p:CoverletOutputFormat=\"cobertura,opencover,lcov,json\" /p:CoverletOutput=/work/dotnet/coverlet/"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "dotnet test --no-build -v q tests/Sample.Tests --collect Code Coverage;Format=cobertura --results-directory ms-cobertura"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "bash -c cp ms-cobertura/*/*.cobertura.xml ms.cobertura.xml"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "dotnet test --no-build -v q tests/Sample.Tests --collect Code Coverage;Format=xml --results-directory ms-xml"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "bash -c cp ms-xml/*/*.xml ms.xml"
+    },
+    {
+      "cwd": "/work/dotnet",
+      "command": "dotnet-coverage collect -f cobertura -o empty.cobertura.xml dotnet test --no-build -v q tests/Sample.Tests"
+    }
+  ],
+  "notes": [
+    "dotnet-coverage/empty-run.cobertura.xml has no packages but line-rate=1 and branch-rate=1"
+  ],
+  "reports": [
+    {
+      "path": "coverlet/coverage.cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/dotnet/coverlet/coverage.cobertura.xml",
+      "bytes": 1086744,
+      "sha256": "da746d5965fe7de786753a4d3d471f3454b8010cb971caf9d8660477a6c35b6c"
+    },
+    {
+      "path": "coverlet/coverage.info",
+      "format": "lcov",
+      "source": "/work/dotnet/coverlet/coverage.info",
+      "bytes": 193767,
+      "sha256": "7e25eb7c723b01726d2e5650981657416b93faf511ebc70f680df14ec7e5012b"
+    },
+    {
+      "path": "coverlet/coverage.json",
+      "format": "coverlet-json",
+      "source": "/work/dotnet/coverlet/coverage.json",
+      "bytes": 634339,
+      "sha256": "6c7d883f128662682b781afeb263e30d4aeefc410533ee48f97fea61cba305d8"
+    },
+    {
+      "path": "coverlet/coverage.opencover.xml",
+      "format": "opencover",
+      "source": "/work/dotnet/coverlet/coverage.opencover.xml",
+      "bytes": 1749503,
+      "sha256": "d9a417baf6e96cdca3b3bf71c717b25b2f3d7a3560bdd9765bcf5ebf3f08b7b1"
+    },
+    {
+      "path": "dotnet-coverage/empty-run.cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/dotnet/empty.cobertura.xml",
+      "bytes": 178,
+      "sha256": "1ce4c1960ad83557f279beb96cf9c3721c144a85e2662dc85800bd66234492b4"
+    },
+    {
+      "path": "microsoft-codecoverage/coverage.cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/dotnet/ms.cobertura.xml",
+      "bytes": 1077131,
+      "sha256": "710224051826df671056d1b6b6f0df9dfaf0aab8017f89d8ed3e5e4cfc7e4ef2"
+    },
+    {
+      "path": "microsoft-codecoverage/coverage.xml",
+      "format": "ms-coverage-xml",
+      "source": "/work/dotnet/ms.xml",
+      "bytes": 966347,
+      "sha256": "2a676449692c10bf7ba2e8eab9973256ba3ba96c8f82c1baf17ea317cc14433d"
+    }
+  ]
+}

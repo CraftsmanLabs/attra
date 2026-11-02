@@ -1,0 +1,59 @@
+{
+  "emitter": "jvm",
+  "image": "maven:3.9.16-eclipse-temurin-21",
+  "tools": {
+    "java": "openjdk version \"21.0.12.1\" 2026-08-18 LTS",
+    "maven": "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)",
+    "jacoco": "jacoco-maven-plugin 0.8.16 (pinned in samples/java/pom.xml)",
+    "openclover": "clover-maven-plugin 5.1.1 (pinned in samples/java/pom.xml)"
+  },
+  "steps": [
+    {
+      "cwd": "/work/java",
+      "command": "bash -c ../gen-big.sh java > src/main/java/attra/sample/Big.java"
+    },
+    {
+      "cwd": "/work/java",
+      "command": "mvn -B -q -Pjacoco test"
+    },
+    {
+      "cwd": "/work/java",
+      "command": "mvn -B -q clean"
+    },
+    {
+      "cwd": "/work/java",
+      "command": "mvn -B -q -Pclover clover:setup test clover:clover"
+    }
+  ],
+  "notes": [],
+  "reports": [
+    {
+      "path": "jacoco/jacoco.csv",
+      "format": "jacoco-csv",
+      "source": "/work/java/target/site/jacoco/jacoco.csv",
+      "bytes": 399,
+      "sha256": "e127f7dcbb21261ac03244330a5481ed1ff9cac60bf620ec5a6326895f6257ee"
+    },
+    {
+      "path": "jacoco/jacoco.exec",
+      "format": "jacoco-exec",
+      "source": "/work/java/target/jacoco.exec",
+      "bytes": 29769,
+      "sha256": "9706db99e84cb22c5291befed5c2aa01138bbfb5f284ca258280a0d557405512"
+    },
+    {
+      "path": "jacoco/jacoco.xml",
+      "format": "jacoco-xml",
+      "source": "/work/java/target/site/jacoco/jacoco.xml",
+      "bytes": 414265,
+      "sha256": "cfbba7385b2c415513a90fc2c8a31e7db157f2602c5ac03e712e3ac51d14f61e"
+    },
+    {
+      "path": "openclover/clover.xml",
+      "format": "clover",
+      "source": "/work/java/target/site/clover/clover.xml",
+      "bytes": 381338,
+      "sha256": "330680cb2a4d348f2748626b691ab69e6acd9eeb0c90dbf67d843537e91e8fb3"
+    }
+  ]
+}

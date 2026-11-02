@@ -1,0 +1,10 @@
+name: sample
+publish_to: none
+environment:
+  sdk: ^3.9.0
+dependencies:
+  util:
+    path: ../util
+dev_dependencies:
+  test: 1.33.0
+  coverage: 1.16.0

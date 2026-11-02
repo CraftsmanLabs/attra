@@ -1,0 +1,5 @@
+{"total": {"lines":{"total":2519,"covered":1515,"skipped":0,"pct":60.14},"statements":{"total":3521,"covered":1517,"skipped":0,"pct":43.08},"functions":{"total":1009,"covered":507,"skipped":0,"pct":50.24},"branches":{"total":2014,"covered":508,"skipped":0,"pct":25.22},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":100}}
+,"/work/js/gen/big.js": {"lines":{"total":2503,"covered":1503,"skipped":0,"pct":60.04},"functions":{"total":1001,"covered":501,"skipped":0,"pct":50.04},"statements":{"total":3503,"covered":1503,"skipped":0,"pct":42.9},"branches":{"total":2000,"covered":500,"skipped":0,"pct":25}}
+,"/work/js/lib/util.js": {"lines":{"total":3,"covered":2,"skipped":0,"pct":66.66},"functions":{"total":2,"covered":1,"skipped":0,"pct":50},"statements":{"total":3,"covered":2,"skipped":0,"pct":66.66},"branches":{"total":0,"covered":0,"skipped":0,"pct":100}}
+,"/work/js/src/classify.js": {"lines":{"total":13,"covered":10,"skipped":0,"pct":76.92},"functions":{"total":6,"covered":5,"skipped":0,"pct":83.33},"statements":{"total":15,"covered":12,"skipped":0,"pct":80},"branches":{"total":14,"covered":8,"skipped":0,"pct":57.14}}
+}

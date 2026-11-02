@@ -1,0 +1,9 @@
+{
+  "name": "attra-sample",
+  "private": true,
+  "type": "commonjs",
+  "devDependencies": {
+    "c8": "12.0.0",
+    "nyc": "18.0.0"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "emitter": "go",
+  "image": "golang:1.27.3",
+  "tools": {
+    "go": "go version go1.27.3 linux/arm64"
+  },
+  "steps": [
+    {
+      "cwd": "/work/go",
+      "command": "bash -c ../gen-big.sh go > classify/big_gen.go"
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go test -covermode=set -coverprofile=set.out ./..."
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go test -covermode=count -coverprofile=count.out ./..."
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go test -covermode=atomic -coverprofile=atomic.out ./..."
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go test -covermode=count -coverpkg=./... -coverprofile=coverpkg.out ./..."
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go test -covermode=count -coverpkg=./... ./classify -args -test.gocoverdir=/work/go/covdata"
+    },
+    {
+      "cwd": "/work/go",
+      "command": "go tool covdata textfmt -i=covdata -o covdata-textfmt.out"
+    },
+    {
+      "cwd": "/work/go",
+      "command": "bash -c go tool covdata func -i=covdata > covdata-func.txt"
+    }
+  ],
+  "notes": [
+    "go test ./... profiles include packages with no tests (util, util/internal) at zero; the covdata from one test binary lists only packages that binary links, so it omits util/internal"
+  ],
+  "reports": [
+    {
+      "path": "covdata",
+      "format": "go-covdata",
+      "source": "/work/go/covdata",
+      "files": {
+        "covcounters.85ead7254fdb487bbc06c20b48232f3a.2507.1793663704195839170": {
+          "bytes": 3794,
+          "sha256": "5c3a005d41c4d8d60baeefa7b0fb94ef9defc394cb5e3bae1eea6761ae6f0100"
+        },
+        "covmeta.85ead7254fdb487bbc06c20b48232f3a": {
+          "bytes": 35319,
+          "sha256": "42139b760d0a1b39a6167f5126eb8d20ef9c5c442b5b96d2ddcc5237f165a246"
+        },
+        "func.txt": {
+          "bytes": 62760,
+          "sha256": "d7b590e988115a1d2c4fadcfc35728ae66459e692b4d4f57ca35fc86e9f39510"
+        }
+      }
+    },
+    {
+      "path": "covdata/func.txt",
+      "format": "go-covdata-func",
+      "source": "/work/go/covdata-func.txt",
+      "bytes": 62760,
+      "sha256": "d7b590e988115a1d2c4fadcfc35728ae66459e692b4d4f57ca35fc86e9f39510"
+    },
+    {
+      "path": "coverprofile/atomic.out",
+      "format": "go-coverprofile",
+      "source": "/work/go/atomic.out",
+      "bytes": 191153,
+      "sha256": "a48d688cf70c05ac772384df6071d641e0e51e58e6c867b185665e411633d429"
+    },
+    {
+      "path": "coverprofile/count-coverpkg-all.out",
+      "format": "go-coverprofile",
+      "source": "/work/go/coverpkg.out",
+      "bytes": 191320,
+      "sha256": "26a7d32c88b53ce4cd2c4740465c20bedf4969715b2d62ef1004ad4223ed458e"
+    },
+    {
+      "path": "coverprofile/count.out",
+      "format": "go-coverprofile",
+      "source": "/work/go/count.out",
+      "bytes": 191152,
+      "sha256": "e5845f00353643e07c61ddb3fd6e555de51f3a521a354055c3ece84720b9bbfd"
+    },
+    {
+      "path": "coverprofile/covdata-textfmt.out",
+      "format": "go-coverprofile",
+      "source": "/work/go/covdata-textfmt.out",
+      "bytes": 191087,
+      "sha256": "e0a5b00cabf8b19eb9824ce1d6af58469ae17fb8feda8d61dc00f120f77587a1"
+    },
+    {
+      "path": "coverprofile/set.out",
+      "format": "go-coverprofile",
+      "source": "/work/go/set.out",
+      "bytes": 191150,
+      "sha256": "840134a3a598018971e9321d9f448c4c5a8455d4dd6af1e08ee9bc9197cc4837"
+    }
+  ]
+}

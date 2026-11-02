@@ -1,0 +1,121 @@
+{
+  "emitter": "node",
+  "image": "node:24.22.2-bookworm",
+  "tools": {
+    "node": "v24.22.2",
+    "nyc": "18.0.0",
+    "c8": "12.0.0"
+  },
+  "steps": [
+    {
+      "cwd": "/work/js",
+      "command": "npm ci --silent"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "bash -c ../gen-big.sh js > gen/big.js"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "npx nyc --all --include src/** --include lib/** --include gen/** --reporter=json --reporter=lcovonly --reporter=cobertura --reporter=clover --reporter=json-summary node test/run.js"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "npx c8 --all --include src/** --include lib/** --include gen/** --reporter=json --reporter=lcovonly --reporter=cobertura --reporter=clover node test/run.js"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "env NODE_V8_COVERAGE=v8 node test/run.js"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "node /corpus/emitters/node/filter-v8.js v8 v8.json"
+    },
+    {
+      "cwd": "/work/js",
+      "command": "node --test --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=node-test.info test/run.test.js"
+    }
+  ],
+  "notes": [
+    "v8/coverage.json is NODE_V8_COVERAGE output filtered to the sample's own files (Node internals and node_modules dropped); otherwise as written"
+  ],
+  "reports": [
+    {
+      "path": "c8/clover.xml",
+      "format": "clover",
+      "source": "/work/js/coverage/clover.xml",
+      "bytes": 253175,
+      "sha256": "7abf3baabbc5f50b3a8e6c42a71a62b4ae24b960af192ee37496541b0223d11c"
+    },
+    {
+      "path": "c8/cobertura-coverage.xml",
+      "format": "cobertura",
+      "source": "/work/js/coverage/cobertura-coverage.xml",
+      "bytes": 468303,
+      "sha256": "d1d75d162a94f97436245c5c3cf4877245e19ef83127653d1999f9b3962a0d59"
+    },
+    {
+      "path": "c8/coverage-final.json",
+      "format": "istanbul-json",
+      "source": "/work/js/coverage/coverage-final.json",
+      "bytes": 761516,
+      "sha256": "80f4e84f7bf876ae22af9fe0888fcd3faf248384c37e0132afa09112f99d258b"
+    },
+    {
+      "path": "c8/lcov.info",
+      "format": "lcov",
+      "source": "/work/js/coverage/lcov.info",
+      "bytes": 87213,
+      "sha256": "a8c08f05bba83520a82bd254b99c77c67d94a2b86579e5f14367edf9e8375030"
+    },
+    {
+      "path": "node-test/lcov.info",
+      "format": "lcov",
+      "source": "/work/js/node-test.info",
+      "bytes": 87220,
+      "sha256": "9a7c63b0daa2343201dd2a2ec1fa0324e57af32ea6aeb50ae8c4ca0aa7c3cc3e"
+    },
+    {
+      "path": "nyc/clover.xml",
+      "format": "clover",
+      "source": "/work/js/coverage/clover.xml",
+      "bytes": 153544,
+      "sha256": "bcc76a0d26c8ce2a3a9ca0c0653acacfef308fe955b6432c3d63f64ce30cf3ad"
+    },
+    {
+      "path": "nyc/cobertura-coverage.xml",
+      "format": "cobertura",
+      "source": "/work/js/coverage/cobertura-coverage.xml",
+      "bytes": 349639,
+      "sha256": "67f27df1dff948f72ef0188e625a03d553361835f12241e4c75482cf127c2f09"
+    },
+    {
+      "path": "nyc/coverage-final.json",
+      "format": "istanbul-json",
+      "source": "/work/js/coverage/coverage-final.json",
+      "bytes": 699118,
+      "sha256": "1af2d76b671830cd38e1c60a693d2e18364623fa23a65c11ef5f529cc4e396f3"
+    },
+    {
+      "path": "nyc/coverage-summary.json",
+      "format": "istanbul-json-summary",
+      "source": "/work/js/coverage/coverage-summary.json",
+      "bytes": 1140,
+      "sha256": "8a8025d46d36628eb4c41b4f40879288f45d18a363fd19d056e4763552ecc2e3"
+    },
+    {
+      "path": "nyc/lcov.info",
+      "format": "lcov",
+      "source": "/work/js/coverage/lcov.info",
+      "bytes": 85010,
+      "sha256": "c01d96c164cd4e966b0ff96cdb88f02c96bb68ff0ecb59c16735a81450165b39"
+    },
+    {
+      "path": "v8/coverage.json",
+      "format": "v8-json",
+      "source": "/work/js/v8.json",
+      "bytes": 235038,
+      "sha256": "6bc0b893ba81b847e852d152feda4b8f14789c41da8707c0a2146d0edcba4fd5"
+    }
+  ]
+}

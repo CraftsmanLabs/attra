@@ -1,0 +1,101 @@
+{
+  "emitter": "php",
+  "image": "php:8.4.27-cli",
+  "tools": {
+    "php": "PHP 8.4.27 (cli) (built: Oct 28 2026 01:24:34) (NTS)",
+    "xdebug": "xdebug 3.5.3 (pecl)",
+    "pcov": "pcov 1.0.12 (pecl)",
+    "phpunit": "PHPUnit 13.4.6 by Sebastian Bergmann and contributors."
+  },
+  "steps": [
+    {
+      "cwd": "/work/php",
+      "command": "composer install -q --no-progress"
+    },
+    {
+      "cwd": "/work/php",
+      "command": "bash -c ../gen-big.sh php > src/Big.php"
+    },
+    {
+      "cwd": "/work/php",
+      "command": "php -d memory_limit=4G -d zend_extension=xdebug -d xdebug.mode=coverage vendor/bin/phpunit --coverage-clover clover.xml --coverage-cobertura cobertura.xml --coverage-openclover openclover.xml --coverage-php coverage.php"
+    },
+    {
+      "cwd": "/work/php",
+      "command": "php -d memory_limit=4G -d zend_extension=xdebug -d xdebug.mode=coverage vendor/bin/phpunit --path-coverage --coverage-clover clover.xml --coverage-cobertura cobertura.xml --coverage-openclover openclover.xml --coverage-php coverage.php"
+    },
+    {
+      "cwd": "/work/php",
+      "command": "php -d extension=pcov -d pcov.enabled=1 vendor/bin/phpunit --coverage-clover clover.xml --coverage-cobertura cobertura.xml --coverage-openclover openclover.xml --coverage-php coverage.php"
+    }
+  ],
+  "notes": [
+    "openclover.xml is PHPUnit's --coverage-openclover writer, separate from its Clover writer",
+    "Xdebug path coverage needed about 450 MB for the 1000-function Big.php, past PHP's default 128 MB limit, so memory_limit is raised"
+  ],
+  "reports": [
+    {
+      "path": "pcov/clover.xml",
+      "format": "clover",
+      "source": "/work/php/clover.xml",
+      "bytes": 282877,
+      "sha256": "c02176fe241bd5f1daece9d24786cb444e008c78a6dd4f9c916bbad8b1d4ad0b"
+    },
+    {
+      "path": "pcov/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/php/cobertura.xml",
+      "bytes": 489559,
+      "sha256": "183cb6cc277c9f8469d6cedbfe0bdbcfae6eb119b90eb0b472c35364dd7e6d9b"
+    },
+    {
+      "path": "xdebug-path-coverage/clover.xml",
+      "format": "clover",
+      "source": "/work/php/clover.xml",
+      "bytes": 282903,
+      "sha256": "bddc3c4241760a5dae2dbe57f81e705a210875ab699d9826555d1082c360f5d3"
+    },
+    {
+      "path": "xdebug-path-coverage/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/php/cobertura.xml",
+      "bytes": 497142,
+      "sha256": "396d360c4c56882f73364e6aaf4c16eb84e46c828873f9a0b67bd81f04c39604"
+    },
+    {
+      "path": "xdebug-path-coverage/openclover.xml",
+      "format": "clover",
+      "source": "/work/php/openclover.xml",
+      "bytes": 290890,
+      "sha256": "2e3c76ae10d8c33f1fb4657124f024f34e2cf187e91f543fcf874d55de9f6630"
+    },
+    {
+      "path": "xdebug/clover.xml",
+      "format": "clover",
+      "source": "/work/php/clover.xml",
+      "bytes": 282877,
+      "sha256": "1ae63ee8d27e66f0ad30e75e3410822180a8013494607648e4cb04cd82964f18"
+    },
+    {
+      "path": "xdebug/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/php/cobertura.xml",
+      "bytes": 489563,
+      "sha256": "7562aa9b606237c1c33029e48add581bc5b55f1201ee303069c1c118a5909ad3"
+    },
+    {
+      "path": "xdebug/coverage.php",
+      "format": "phpunit-php",
+      "source": "/work/php/coverage.php",
+      "bytes": 59112,
+      "sha256": "30b2bb9bf762368b635c443a4b4f0f01745240b60724c7b957b53b2de859c1bf"
+    },
+    {
+      "path": "xdebug/openclover.xml",
+      "format": "clover",
+      "source": "/work/php/openclover.xml",
+      "bytes": 290862,
+      "sha256": "a1848766e29c5103cb96783a087eddb72a084af845ba5deb655aee8a1415b3e0"
+    }
+  ]
+}
