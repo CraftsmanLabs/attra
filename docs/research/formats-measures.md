@@ -139,8 +139,8 @@ Second matrix: how each format marks lines and records metadata.
 
 ### coverage.py
 
-- JSON (format 3; "1" had no number, "2" added `meta.format`, "3" added regions; covpy-json L30-L33). `meta` holds `format`, `version`, `timestamp` (`datetime.now().isoformat()`, local time with no zone), `branch_coverage` and `show_contexts`. Each file is keyed by `relative_filename()` and lists `executed_lines`, `missing_lines`, `excluded_lines` and a `summary`. With branches it adds `executed_branches` and `missing_branches` as `[from, to]` pairs, where a negative `to` means exit. `contexts` (line → list of context labels) appears with `--show-contexts`. `functions` and `classes` map a qualified name to a region with its own executed, missing and excluded lines and `start_line`. The `""` key holds lines outside any region (L119-L165). No counts.
-- **When branches weren't measured, the branch keys are missing rather than zero** (L101-L103, L130-L137). In this format, absence is a reliable "not recorded".
+- JSON (format 3; "1" had no number, "2" added `meta.format`, "3" added regions; covpy-json L30-L33). `meta` holds `format`, `version`, `timestamp` (`datetime.now().isoformat()`, local time with no zone), `branch_coverage` and `show_contexts`. Each file is keyed by `relative_filename()` and lists `executed_lines`, `missing_lines`, `excluded_lines` and a `summary`. With branches it adds `executed_branches` and `missing_branches` as `[from, to]` pairs, where a negative `to` means exit. `contexts` (line → list of context labels) appears with `--show-contexts`. `functions` and `classes` map a qualified name to a region with its own executed, missing and excluded lines and `start_line`. The `""` key holds lines outside any region (L112-L163). No counts.
+- **When branches weren't measured, the branch keys are missing rather than zero** (L101-L103, L127-L137, L185-L192). In this format, absence is a reliable "not recorded".
 - XML: Cobertura with the quirks listed above.
 - `.coverage` SQLite (schema 7): tables `meta` (`has_arcs`, `sys_argv`, `version`, `when`, `hash`), `file(path)`, `context`, `line_bits(file_id, context_id, numbits)`, `arc(file_id, context_id, fromno, tono)` and `tracer` (covpy-sql SCHEMA). It records **only what ran**. There is no table of statements or of missing lines, so producing line coverage means running coverage.py's source analysis on the file at that commit.
 
@@ -177,12 +177,12 @@ Second matrix: how each format marks lines and records metadata.
   - A branch is `[lineStart, colStart, lineEnd, colEnd, trueCount, falseCount, fileId, expandedFileId, kind]`.
   - An MC/DC record holds the decision region, true/false decision counts, a per-condition "independence pair covered" boolean, and test vectors (`conditions` true/false/null, `executed`, `result`).
   - The summary has `lines`, `functions`, `instantiations`, `regions`, `branches` and `mcdc`.
-  - Source: llvm CoverageExporterJson.cpp L1-L50, L82-L200, L242-L300.
+  - Source: llvm CoverageExporterJson.cpp L12-L50, L84-L200, L245-L360.
 - Region kinds: `CodeRegion`, `ExpansionRegion` (macro or `#include`), `SkippedRegion` (preprocessor-skipped), `GapRegion`, `BranchRegion`, `MCDCDecisionRegion`, `MCDCBranchRegion` (CoverageMapping.h L230-L258).
 - Line coverage is **derived**. A line is mapped if a counted region starts on it or a counted segment wraps it, and its count is the maximum among non-gap region starts on the line and the wrapped segment (CoverageMapping.cpp L1571-L1615).
 - `functions[]` has one entry per instantiation (templates, generics), with its mangled `name`, `count`, `regions`, `branches`, `mcdc_records` and `filenames`.
-- Counts are clamped to `INT64_MAX` because JSON stores int64 (L70-L76). Branch regions where both outcomes are constant-folded are left out of function output (L205-L210).
-- Export options change the shape. `-summary-only` drops segments, branches and expansions, and `-skip-expansions` drops expansions (L248-L265).
+- Counts are clamped to `INT64_MAX` because JSON stores int64 (L74-L82). Branch regions where both outcomes are constant-folded are left out of function output (L213-L220).
+- Export options change the shape. `-summary-only` drops segments, branches and expansions, and `-skip-expansions` drops expansions (L330-L360, L459).
 
 ### gcov JSON (`gcov --json-format`)
 
