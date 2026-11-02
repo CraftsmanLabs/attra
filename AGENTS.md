@@ -1,0 +1,34 @@
+# Attra Agent Guide
+
+Attra is an open-source code quality CLI for people and their coding agents, written in Zig. This repo holds the CLI only.
+
+## Where things stand
+
+There is no code yet. The work is planning, and it lives on the issue tracker:
+
+- **Map: attra coverage v1** ([#8](https://github.com/CraftsmanLabs/attra/issues/8)) is the accepted, active effort. It is a `/wayfinder` map: read its Destination, Notes and Decisions so far before working on coverage, and take the next ticket from its open sub-issues.
+- Issues labelled `proposal` or `spike` (the direction proposal and its spikes) are proposed, not accepted. Treat them as open questions. Never cite them as decisions.
+- `research/*` branches hold the findings of closed research tickets. Each ticket links its branch. They are never merged.
+- Building is blocked on zcli: zcli 0.26.0 targets Zig 0.16 and fails on Zig 0.17.0, the current stable release, so it needs porting before attra code is written.
+
+## Core tenet: repeated work becomes a deterministic tool
+
+If something is useful and will be done again, write a deterministic tool for it rather than redoing it by hand or by prompt. A tool gives the same output for the same input, can be tested, and can be depended on.
+
+This decides what attra is, not only how we build it. Attra gives other people and their agents deterministic processes. When weighing a design, prefer the one where a tested tool does the work over one where an agent redoes it each time. Attra never calls an LLM itself; where judgment is needed, it hands structured output to the user's own agent.
+
+Applied to our own work: give every tool tests that pin its output for known inputs (fixtures or golden files), and keep the LLM for the parts that need judgment.
+
+## Agent skills
+
+### Issue tracker
+
+Issues, wayfinder maps and tickets live in GitHub Issues on CraftsmanLabs/attra, via `gh`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
