@@ -1,0 +1,76 @@
+{
+  "emitter": "kcov",
+  "image": "debian:trixie-20261027",
+  "tools": {
+    "kcov": "kcov 43+dfsg-1+b4",
+    "gcc": "gcc (Debian 14.2.0-19) 14.2.0"
+  },
+  "steps": [
+    {
+      "cwd": "/work/shell",
+      "command": "kcov --include-path=/work/shell out-shell ./classify.sh"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "./build.sh gcc g++ -O0 -g"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "kcov --include-path=/work/c out-c ./build/test"
+    }
+  ],
+  "notes": [
+    "compiled/: for compiled code kcov's per-line hits count breakpoint addresses on the line, not executions"
+  ],
+  "reports": [
+    {
+      "path": "bash/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/shell/out-shell/classify.sh/cobertura.xml",
+      "bytes": 1911,
+      "sha256": "8c48837b9896bf4f3c1d40592cbf73f8494b9085ad0328b49b2cd10b77ddcdc4"
+    },
+    {
+      "path": "bash/codecov.json",
+      "format": "codecov-json",
+      "source": "/work/shell/out-shell/classify.sh/codecov.json",
+      "bytes": 472,
+      "sha256": "f7dd2ba8c79c56d834d3fd09bc49567cff45120cf22d4c1124ab714796bcb09d"
+    },
+    {
+      "path": "bash/coverage.json",
+      "format": "kcov-json",
+      "source": "/work/shell/out-shell/classify.sh/coverage.json",
+      "bytes": 679,
+      "sha256": "6370c943c395d01a87c7eee327721268ce595ed84b493865eccf1e9b87bf48c3"
+    },
+    {
+      "path": "bash/sonarqube.xml",
+      "format": "sonarqube-xml",
+      "source": "/work/shell/out-shell/classify.sh/sonarqube.xml",
+      "bytes": 1337,
+      "sha256": "1866a2407de0ebeb845ec11058788cf1dddb1303d0291cd1e612d802e6a785dd"
+    },
+    {
+      "path": "compiled/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/c/out-c/test/cobertura.xml",
+      "bytes": 168506,
+      "sha256": "2d09e8c54f98fef0f9366e28dcd5d2bba9be5e5ec231ef597e8ef4b05f5d1ab2"
+    },
+    {
+      "path": "compiled/codecov.json",
+      "format": "codecov-json",
+      "source": "/work/c/out-c/test/codecov.json",
+      "bytes": 94502,
+      "sha256": "d1ec9101ed1df435a5d18f3bd586a080127d3982e85d7e7783221a598159ccc2"
+    },
+    {
+      "path": "compiled/coverage.json",
+      "format": "kcov-json",
+      "source": "/work/c/out-c/test/coverage.json",
+      "bytes": 863,
+      "sha256": "cf8ea315fa34c3e93e9fefda049da695a00595a884c025958625ed5a8864b880"
+    }
+  ]
+}

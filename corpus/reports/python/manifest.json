@@ -1,0 +1,146 @@
+{
+  "emitter": "python",
+  "image": "python:3.14.10-slim",
+  "tools": {
+    "python": "Python 3.14.10",
+    "coverage": "Coverage.py, version 7.17.0 with C extension"
+  },
+  "steps": [
+    {
+      "cwd": "/work/python",
+      "command": "bash -c ../gen-big.sh py > src/sample/big.py"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage run test/run.py"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage json -o line.json"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage xml -o line.xml"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage lcov -o line.info"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage erase"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage run --branch test/run.py"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage json -o branch.json"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage xml -o branch.xml"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage lcov -o branch.info"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage erase"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage run --branch --parallel-mode --context=part-a test/run.py a"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage run --branch --parallel-mode --context=part-b test/run.py b"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage combine"
+    },
+    {
+      "cwd": "/work/python",
+      "command": "coverage json --show-contexts --include=src/sample/classify.py,lib/* -o contexts.json"
+    }
+  ],
+  "notes": [
+    "line-only/coverage.xml is Cobertura with branch-rate 0 and branches-valid 0 although branches were not measured",
+    "contexts/coverage.json leaves out the generated big.py; with contexts shown, it alone made the report 60 MB"
+  ],
+  "reports": [
+    {
+      "path": "branch/.coverage",
+      "format": "coverage-py-data",
+      "source": "/work/python/.coverage",
+      "bytes": 172032,
+      "sha256": "687703bee802f3cdd171cc7edb394f38633b1a6d7e13d61514a3148cacfb2995"
+    },
+    {
+      "path": "branch/coverage.info",
+      "format": "lcov",
+      "source": "/work/python/branch.info",
+      "bytes": 138023,
+      "sha256": "61fb19191f03f9279c95416dda295702c1fec43b88fcf174b47ab49a9237273e"
+    },
+    {
+      "path": "branch/coverage.json",
+      "format": "coverage-py-json",
+      "source": "/work/python/branch.json",
+      "bytes": 717418,
+      "sha256": "fd53227cb0e119650880d83cab28a5cc5ff7b53c2b6b02838903b94e55c6b981"
+    },
+    {
+      "path": "branch/coverage.xml",
+      "format": "cobertura",
+      "source": "/work/python/branch.xml",
+      "bytes": 239306,
+      "sha256": "0001e117b18a49c7610a422a0d18e60dbbd674178c54dd9253f2c72d3cee9935"
+    },
+    {
+      "path": "contexts/.coverage",
+      "format": "coverage-py-data",
+      "source": "/work/python/.coverage",
+      "bytes": 212992,
+      "sha256": "a858c7b14c9c2f491ae833db8a6b8f55b07e1792d784ff22e38437a8b84b4870"
+    },
+    {
+      "path": "contexts/coverage.json",
+      "format": "coverage-py-json",
+      "source": "/work/python/contexts.json",
+      "bytes": 14946,
+      "sha256": "d2bf101b335d67bb0a48902dca54d92dec6641db7c638c2e8da2697501055c01"
+    },
+    {
+      "path": "line-only/.coverage",
+      "format": "coverage-py-data",
+      "source": "/work/python/.coverage",
+      "bytes": 53248,
+      "sha256": "7c2ba6c53d2eacf175ed76be03d2ac0bf999df742c67277ebb3d1cc9e355fb18"
+    },
+    {
+      "path": "line-only/coverage.info",
+      "format": "lcov",
+      "source": "/work/python/line.info",
+      "bytes": 74390,
+      "sha256": "1daa9b0c8b9ff3b4535096a41275a15277a1c8a9c6217f3e0e4eea7b97a0089c"
+    },
+    {
+      "path": "line-only/coverage.json",
+      "format": "coverage-py-json",
+      "source": "/work/python/line.json",
+      "bytes": 423314,
+      "sha256": "9f5400f6bc848f846ccfd60a6ed775a33a14bbbf17b5939c92267939529a2044"
+    },
+    {
+      "path": "line-only/coverage.xml",
+      "format": "cobertura",
+      "source": "/work/python/line.xml",
+      "bytes": 168198,
+      "sha256": "52bcab8655100235a56a7e1e1340af1852e6d2ca18c50573a364d5d77df1c894"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "emitter": "ruby",
+  "image": "ruby:3.4.12-slim",
+  "tools": {
+    "ruby": "ruby 3.4.12 (2026-10-23 revision 366f5fdc00) +PRISM [aarch64-linux]",
+    "simplecov-1": "1.3.2",
+    "simplecov-0.22": "0.22.0"
+  },
+  "steps": [
+    {
+      "cwd": "/work/ruby",
+      "command": "bash -c ../gen-big.sh rb > lib/sample/big.rb"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "bundle install --quiet"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "env WITH_PLUGINS=1 bundle exec ruby test/run.rb"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "env WITH_PLUGINS=1 BRANCH=1 METHOD=1 bundle exec ruby test/run.rb"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "bundle install --quiet"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "env WITH_PLUGINS=1 bundle exec ruby test/run.rb"
+    },
+    {
+      "cwd": "/work/ruby",
+      "command": "env WITH_PLUGINS=1 BRANCH=1 METHOD=1 bundle exec ruby test/run.rb"
+    }
+  ],
+  "notes": [],
+  "reports": [
+    {
+      "path": "simplecov-0.22/branch/.resultset.json",
+      "format": "simplecov-resultset",
+      "source": "/work/ruby/coverage/.resultset.json",
+      "bytes": 220821,
+      "sha256": "77e96b0a7d7d02e6cf0ca7789b5b9ee695a1178016011df4ef31ebf8dd9008e7"
+    },
+    {
+      "path": "simplecov-0.22/branch/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/ruby/coverage/coverage.xml",
+      "bytes": 234676,
+      "sha256": "695177aae246ea7653ffd886d99a6eadab1b57b644b7e0e1f664a18687ffce53"
+    },
+    {
+      "path": "simplecov-0.22/branch/coverage.json",
+      "format": "simplecov-json",
+      "source": "/work/ruby/coverage/coverage.json",
+      "bytes": 311992,
+      "sha256": "ff08574188d63af664a575929fa146fecf4cf618ff4d364e68e09ce9e399e298"
+    },
+    {
+      "path": "simplecov-0.22/branch/lcov.info",
+      "format": "lcov",
+      "source": "/work/ruby/coverage/lcov.info",
+      "bytes": 71060,
+      "sha256": "d9b557000f007343f4394e779faa31b431ae86168e792e03bdd8c8c0df3ac262"
+    },
+    {
+      "path": "simplecov-0.22/line/.resultset.json",
+      "format": "simplecov-resultset",
+      "source": "/work/ruby/coverage/.resultset.json",
+      "bytes": 62754,
+      "sha256": "4ece1e9fe8260432c301d7bd1419543b1c3715e0d591c73ad8819c24ba694c91"
+    },
+    {
+      "path": "simplecov-0.22/line/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/ruby/coverage/coverage.xml",
+      "bytes": 151945,
+      "sha256": "367e28caeea2df6116d9d5cb5b411f0b6a0c96d375c54d2bb6b259720306e001"
+    },
+    {
+      "path": "simplecov-0.22/line/coverage.json",
+      "format": "simplecov-json",
+      "source": "/work/ruby/coverage/coverage.json",
+      "bytes": 53644,
+      "sha256": "49c7ee68ff6a4ca802d91f0ce9b3a749a13567a4ee4aba5bccf4affc09e4ef62"
+    },
+    {
+      "path": "simplecov-0.22/line/lcov.info",
+      "format": "lcov",
+      "source": "/work/ruby/coverage/lcov.info",
+      "bytes": 34523,
+      "sha256": "21e70e6acad79ba000cf9f22617249e4aae04377eeadb16f8ebfe09697f0085d"
+    },
+    {
+      "path": "simplecov-1/branch/.resultset.json",
+      "format": "simplecov-resultset",
+      "source": "/work/ruby/coverage/.resultset.json",
+      "bytes": 157979,
+      "sha256": "2520d464478621a4aafc8e12474d0ed638947cc4a2527dd95cd7b083333e3b7c"
+    },
+    {
+      "path": "simplecov-1/branch/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/ruby/coverage/coverage.xml",
+      "bytes": 234676,
+      "sha256": "8f8446f9f3f9d8a182f3a65b55af0c9347d5b6ebf75b9abca72a6feea34c07ac"
+    },
+    {
+      "path": "simplecov-1/branch/coverage.json",
+      "format": "simplecov-json",
+      "source": "/work/ruby/coverage/coverage.json",
+      "bytes": 684243,
+      "sha256": "b2ea7f0655fc107d8dc5877520c18c3946e81cf754103c87f15acbeeacba266b"
+    },
+    {
+      "path": "simplecov-1/branch/lcov.info",
+      "format": "lcov",
+      "source": "/work/ruby/coverage/lcov.info",
+      "bytes": 71098,
+      "sha256": "03e027794e05cfbfc761537a07c6bb259e01c82e216d6a981ad976616714c98d"
+    },
+    {
+      "path": "simplecov-1/line/.resultset.json",
+      "format": "simplecov-resultset",
+      "source": "/work/ruby/coverage/.resultset.json",
+      "bytes": 12496,
+      "sha256": "3826170837a8c8cc725561f85352fb0c2ba31e93d2fdd09da0363fde7dc7d1cc"
+    },
+    {
+      "path": "simplecov-1/line/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/ruby/coverage/coverage.xml",
+      "bytes": 151945,
+      "sha256": "5ea6c5cba19b61b6824f73072d110d88e38ca1e95f12e25c46046e8523987661"
+    },
+    {
+      "path": "simplecov-1/line/coverage.json",
+      "format": "simplecov-json",
+      "source": "/work/ruby/coverage/coverage.json",
+      "bytes": 177104,
+      "sha256": "7dc5a0fb74f13b593bd3184b869033beb426d1b3c8e3c0134f8268b238bc02f5"
+    },
+    {
+      "path": "simplecov-1/line/lcov.info",
+      "format": "lcov",
+      "source": "/work/ruby/coverage/lcov.info",
+      "bytes": 34561,
+      "sha256": "51d2fb04bb8863bca7fb3be2becf28bf3a8fdfa59dee719efa618d0a61bdd234"
+    }
+  ]
+}

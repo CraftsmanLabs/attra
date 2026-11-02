@@ -1,0 +1,87 @@
+{
+  "emitter": "rust",
+  "image": "rust:1.99.1",
+  "tools": {
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "cargo-llvm-cov": "cargo-llvm-cov 0.9.1",
+    "cargo-tarpaulin": "cargo-tarpaulin-tarpaulin 0.37.5"
+  },
+  "steps": [
+    {
+      "cwd": "/work/rust",
+      "command": "bash -c ../gen-big.sh rs > sample/src/big.rs"
+    },
+    {
+      "cwd": "/work/rust",
+      "command": "cargo llvm-cov --workspace --json --output-path llvm-cov.json"
+    },
+    {
+      "cwd": "/work/rust",
+      "command": "cargo llvm-cov report --lcov --output-path llvm-cov.info"
+    },
+    {
+      "cwd": "/work/rust",
+      "command": "cargo llvm-cov report --cobertura --output-path llvm-cov.xml"
+    },
+    {
+      "cwd": "/work/rust",
+      "command": "cargo llvm-cov report --codecov --output-path llvm-cov-codecov.json"
+    },
+    {
+      "cwd": "/work/rust",
+      "command": "cargo tarpaulin --workspace --skip-clean --out Json --out Lcov --out Xml --output-dir tarpaulin"
+    }
+  ],
+  "notes": [],
+  "reports": [
+    {
+      "path": "cargo-llvm-cov/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/rust/llvm-cov.xml",
+      "bytes": 1065193,
+      "sha256": "e047c8e25c8733d2642b89e4c223be7ceee1b5454e4cac0c1ecd1bcb51643588"
+    },
+    {
+      "path": "cargo-llvm-cov/codecov.json",
+      "format": "codecov-json",
+      "source": "/work/rust/llvm-cov-codecov.json",
+      "bytes": 83894,
+      "sha256": "116bbcb4749e035461d975e23abee14ab0a3a0928b58cede0de483e3aec55349"
+    },
+    {
+      "path": "cargo-llvm-cov/export.json",
+      "format": "llvm-cov-json",
+      "source": "/work/rust/llvm-cov.json",
+      "bytes": 986775,
+      "sha256": "1c494bbf217eaf5e6e5784a3adc25c5034af7007a586e50f32641b4db83c0279"
+    },
+    {
+      "path": "cargo-llvm-cov/lcov.info",
+      "format": "lcov",
+      "source": "/work/rust/llvm-cov.info",
+      "bytes": 243348,
+      "sha256": "c41e4e668798c192a05982811fc72568902b68a72774b87fd830db908338a964"
+    },
+    {
+      "path": "tarpaulin/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/rust/tarpaulin/cobertura.xml",
+      "bytes": 135813,
+      "sha256": "8adbe24a2efcf3e0fee5aa3bb24222a6e96a2e4f36f08d7bf88dcc2e6946e3b7"
+    },
+    {
+      "path": "tarpaulin/lcov.info",
+      "format": "lcov",
+      "source": "/work/rust/tarpaulin/lcov.info",
+      "bytes": 69444,
+      "sha256": "fb2aaa70301960987b32b937eb9714a82d64731679e75bb80581a03a278cebaa"
+    },
+    {
+      "path": "tarpaulin/tarpaulin-report.json",
+      "format": "tarpaulin-json",
+      "source": "/work/rust/tarpaulin/tarpaulin-report.json",
+      "bytes": 355799,
+      "sha256": "0bae4fe980ff168e4e3dcbaf47d9ab75b228d4c2ef13b567e79296b1ffdf2fb5"
+    }
+  ]
+}

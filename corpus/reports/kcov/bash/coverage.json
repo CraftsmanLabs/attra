@@ -1,0 +1,15 @@
+{
+  "files": [
+    {"file": "/work/shell/out-shell/bash-helper.sh", "percent_covered": "0.00", "covered_lines": "0", "total_lines": "2"},
+    {"file": "/work/shell/out-shell/bash-helper-debug-trap.sh", "percent_covered": "0.00", "covered_lines": "0", "total_lines": "3"},
+    {"file": "/work/shell/classify.sh", "percent_covered": "78.57", "covered_lines": "11", "total_lines": "14"},
+    {"file": "/work/shell/lib/util.sh", "percent_covered": "50.00", "covered_lines": "1", "total_lines": "2"}
+  ],
+  "percent_covered": "57.14",
+  "covered_lines": 12,
+  "total_lines": 21,
+  "percent_low": 25,
+  "percent_high": 75,
+  "command": "classify.sh",
+  "date": "2026-11-02 23:55:31"
+}

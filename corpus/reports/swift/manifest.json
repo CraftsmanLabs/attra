@@ -1,0 +1,45 @@
+{
+  "emitter": "swift",
+  "image": "swift:6.3.3-noble",
+  "tools": {
+    "swift": "Swift version 6.3.3 (swift-6.3.3-RELEASE)",
+    "llvm-cov": "  LLVM version 21.0.0"
+  },
+  "steps": [
+    {
+      "cwd": "/work/swift",
+      "command": "bash -c ../gen-big.sh swift > Sources/Sample/Big.swift"
+    },
+    {
+      "cwd": "/work/swift",
+      "command": "swift test --enable-code-coverage"
+    },
+    {
+      "cwd": "/work/swift",
+      "command": "bash -c cp \"$(swift test --show-codecov-path)\" swiftpm.json"
+    },
+    {
+      "cwd": "/work/swift",
+      "command": "bash -c llvm-cov export -format=lcov .build/debug/SamplePackageTests.xctest -instr-profile=.build/debug/codecov/default.profdata -ignore-filename-regex='.build|Tests' > export.info"
+    }
+  ],
+  "notes": [
+    "swiftpm/codecov.json is the export SwiftPM writes itself; it covers the test target's sources too"
+  ],
+  "reports": [
+    {
+      "path": "llvm-cov/export.info",
+      "format": "lcov",
+      "source": "/work/swift/export.info",
+      "bytes": 99495,
+      "sha256": "8abcddc37c97cbf05fee8bd2b9bbedbb831ffd05ce72838c3e0a5712a520a0aa"
+    },
+    {
+      "path": "swiftpm/codecov.json",
+      "format": "llvm-cov-json",
+      "source": "/work/swift/swiftpm.json",
+      "bytes": 460284,
+      "sha256": "9bcaadec3472b923d86989b10ff0f0179f0d4cde47b13b8503620c0e196b0c1a"
+    }
+  ]
+}

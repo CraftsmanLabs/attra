@@ -1,0 +1,4 @@
+tool	go	go version go1.27.3 linux/arm64
+step	/work/go	go test -coverprofile=a.out ./...
+note	set mode records hit or not hit only
+report	a.out	go-coverprofile	/work/go/a.out

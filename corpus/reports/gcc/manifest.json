@@ -1,0 +1,104 @@
+{
+  "emitter": "gcc",
+  "image": "gcc:15.3.0",
+  "tools": {
+    "gcc": "gcc (GCC) 15.3.0",
+    "gcov": "gcov (GCC) 15.3.0",
+    "lcov": "lcov: LCOV version 2.0-1",
+    "lcov-package": "lcov 2.3.1-1",
+    "gcovr": "gcovr 8.8"
+  },
+  "steps": [
+    {
+      "cwd": "/work/c",
+      "command": "./build.sh gcc g++ -O0 --coverage -fcondition-coverage"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "./build/test"
+    },
+    {
+      "cwd": "/work/c/gcov-json",
+      "command": "gcov --json-format --branch-probabilities --conditions --object-directory ../build ../build/big.gcda ../build/classify.gcda ../build/templates.gcda ../build/test_main.gcda ../build/util.gcda"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "lcov --capture --directory build --base-directory . --output-file lcov-default.info"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "lcov --capture --directory build --base-directory . --rc branch_coverage=1 --rc mcdc_coverage=1 --output-file lcov-branch-mcdc.info"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "gcovr --root . --object-directory build --cobertura-pretty --cobertura gcovr-cobertura.xml --lcov gcovr.info --json-pretty --json gcovr.json"
+    }
+  ],
+  "notes": [
+    "gcov JSON writes one .gcov.json.gz per translation unit; static inline add() from lib/util.h appears in several of them"
+  ],
+  "reports": [
+    {
+      "path": "gcov-json",
+      "format": "gcov-json",
+      "source": "/work/c/gcov-json",
+      "files": {
+        "big.gcov.json.gz": {
+          "bytes": 41649,
+          "sha256": "cc3306ba4e34125b5a91b8a32103f7bdb991401b3b97ac6fd58b4c3262c683ea"
+        },
+        "classify.gcov.json.gz": {
+          "bytes": 888,
+          "sha256": "f73298e51ac03bd34f42950388a4d4122e6336ce339a2dc3222f5032fd491248"
+        },
+        "templates.gcov.json.gz": {
+          "bytes": 633,
+          "sha256": "38aa84c7b1c1f94935b86cee9729b0ed0de875568ad285dbcebdb3f869bee038"
+        },
+        "test_main.gcov.json.gz": {
+          "bytes": 743,
+          "sha256": "52d87d94068c60baf7656f7c7e910776f22bc54f0d25f5f32f1007cbbf274a29"
+        },
+        "util.gcov.json.gz": {
+          "bytes": 390,
+          "sha256": "3ce46ae3580e55127c66a35085ca2c985a40f2e983a5cea44b5d2a61b06021bb"
+        }
+      }
+    },
+    {
+      "path": "gcovr/cobertura.xml",
+      "format": "cobertura",
+      "source": "/work/c/gcovr-cobertura.xml",
+      "bytes": 953783,
+      "sha256": "a2bb36dceec52c7cf1c6604b02a8981a90919f478f0e8567a561373c4e4e99eb"
+    },
+    {
+      "path": "gcovr/gcovr.json",
+      "format": "gcovr-json",
+      "source": "/work/c/gcovr.json",
+      "bytes": 2750780,
+      "sha256": "466616e2612224ed9ca90a736e63506db45d9cebcadbd26ca0bd073d5c2f24a0"
+    },
+    {
+      "path": "gcovr/lcov.info",
+      "format": "lcov",
+      "source": "/work/c/gcovr.info",
+      "bytes": 208987,
+      "sha256": "43fffd758bb0b0513542df915300886083016dc78c590ab6c659eea886707a27"
+    },
+    {
+      "path": "lcov/branch-mcdc.info",
+      "format": "lcov",
+      "source": "/work/c/lcov-branch-mcdc.info",
+      "bytes": 139545,
+      "sha256": "1ae3fba34961f73e2e6f7782c096f5508edfe6dd4ee4399ed023edb66495691f"
+    },
+    {
+      "path": "lcov/default.info",
+      "format": "lcov",
+      "source": "/work/c/lcov-default.info",
+      "bytes": 67401,
+      "sha256": "ea78c25f1ab8645b6735544ebf31aeab669375f21f7f39d5e02af2bf0ebad8cc"
+    }
+  ]
+}

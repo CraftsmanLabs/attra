@@ -1,0 +1,71 @@
+{
+  "emitter": "llvm",
+  "image": "debian:trixie-20261027",
+  "tools": {
+    "clang": "Debian clang version 19.1.7 (3+b1)",
+    "llvm-cov": "Debian LLVM version 19.1.7"
+  },
+  "steps": [
+    {
+      "cwd": "/work/c",
+      "command": "./build.sh clang clang++ -O0 -fprofile-instr-generate -fcoverage-mapping -fcoverage-mcdc"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "env LLVM_PROFILE_FILE=build/test.profraw ./build/test"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "llvm-profdata merge -sparse build/test.profraw -o build/test.profdata"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "llvm-cov export ./build/test -instr-profile=build/test.profdata -format=text"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "llvm-cov export ./build/test -instr-profile=build/test.profdata -format=text -summary-only"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "llvm-cov export ./build/test -instr-profile=build/test.profdata -format=lcov"
+    },
+    {
+      "cwd": "/work/c",
+      "command": "llvm-cov export ./build/test -instr-profile=build/test.profdata -format=text -skip-expansions -skip-functions"
+    }
+  ],
+  "notes": [
+    "summary-only.json has totals per file and no per-line or per-region data"
+  ],
+  "reports": [
+    {
+      "path": "llvm-cov/export-skip-expansions-functions.json",
+      "format": "llvm-cov-json",
+      "source": "/work/c/export-no-functions.json",
+      "bytes": 270487,
+      "sha256": "1946d5546b1aac8a0fd0c1b1227a917718f6adc2b397a46af0568bd7e5b36f89"
+    },
+    {
+      "path": "llvm-cov/export.info",
+      "format": "lcov",
+      "source": "/work/c/export.info",
+      "bytes": 101811,
+      "sha256": "2529813799092c2145246c84012cba3ec84b5219afa0849b2424368321f1c431"
+    },
+    {
+      "path": "llvm-cov/export.json",
+      "format": "llvm-cov-json",
+      "source": "/work/c/export.json",
+      "bytes": 573093,
+      "sha256": "1292b3730e09e11858cc6a01781deaee010e22748b422b765ca870db7d59a1a7"
+    },
+    {
+      "path": "llvm-cov/summary-only.json",
+      "format": "llvm-cov-json",
+      "source": "/work/c/summary.json",
+      "bytes": 3021,
+      "sha256": "dfb6863cba9259dd2b83d1691e6ed5e9a0de864a56af3fd07e5b9df3690fa595"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "files": [
+    {"file": "/work/c/lib/util.c", "percent_covered": "33.33", "covered_lines": "1", "total_lines": "3"},
+    {"file": "/work/c/tests/test_main.cpp", "percent_covered": "100.00", "covered_lines": "12", "total_lines": "12"},
+    {"file": "/work/c/src/templates.cpp", "percent_covered": "100.00", "covered_lines": "7", "total_lines": "7"},
+    {"file": "/work/c/src/classify.c", "percent_covered": "76.19", "covered_lines": "16", "total_lines": "21"},
+    {"file": "/work/c/lib/util.h", "percent_covered": "100.00", "covered_lines": "1", "total_lines": "1"},
+    {"file": "/work/c/gen/big.c", "percent_covered": "55.60", "covered_lines": "2504", "total_lines": "4504"}
+  ],
+  "percent_covered": "55.87",
+  "covered_lines": 2541,
+  "total_lines": 4548,
+  "percent_low": 25,
+  "percent_high": 75,
+  "command": "test",
+  "date": "2026-11-02 23:55:31"
+}

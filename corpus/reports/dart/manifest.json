@@ -1,0 +1,65 @@
+{
+  "emitter": "dart",
+  "image": "dart:3.13.7-sdk",
+  "tools": {
+    "dart": "Dart SDK version: 3.13.7 (stable) (Thu Oct 22 14:28:57 2026 -0700) on \"linux_arm64\"",
+    "coverage": "    version: \"1.16.0\""
+  },
+  "steps": [
+    {
+      "cwd": "/work/dart/sample",
+      "command": "bash -c ../../gen-big.sh dart > lib/src/big.dart"
+    },
+    {
+      "cwd": "/work/dart/sample",
+      "command": "dart pub get"
+    },
+    {
+      "cwd": "/work/dart/sample",
+      "command": "dart test --coverage=raw"
+    },
+    {
+      "cwd": "/work/dart/sample",
+      "command": "bash -c cp raw/test/sample_test.dart.vm.json hitmap.json"
+    },
+    {
+      "cwd": "/work/dart/sample",
+      "command": "dart run coverage:format_coverage --lcov --in=raw --out=format.info --report-on=lib --report-on=../util/lib --check-ignore"
+    },
+    {
+      "cwd": "/work/dart/sample",
+      "command": "dart run coverage:test_with_coverage --branch-coverage --function-coverage --out=twc"
+    }
+  ],
+  "notes": [],
+  "reports": [
+    {
+      "path": "dart-test/sample_test.dart.vm.json",
+      "format": "dart-vm-json",
+      "source": "/work/dart/sample/hitmap.json",
+      "bytes": 217098,
+      "sha256": "db19cbaf30c0ea23cc294d61d4c298a9247e8485c2b998af12cd634e038b27a8"
+    },
+    {
+      "path": "format_coverage/lcov.info",
+      "format": "lcov",
+      "source": "/work/dart/sample/format.info",
+      "bytes": 24748,
+      "sha256": "decb1bf67fad4fb94621a9ebbbcbdb0a1d03ebe548dca8e79c2241cca9a2b2c4"
+    },
+    {
+      "path": "test_with_coverage/branch-function-lcov.info",
+      "format": "lcov",
+      "source": "/work/dart/sample/twc/lcov.info",
+      "bytes": 74947,
+      "sha256": "2e55c6d20007ef49040ae39920c86073cb69b8fc052d2eae5803cdd01297e0af"
+    },
+    {
+      "path": "test_with_coverage/coverage.json",
+      "format": "dart-vm-json",
+      "source": "/work/dart/sample/twc/coverage.json",
+      "bytes": 49477,
+      "sha256": "92351d5fd9a1a2ab310e17a7ae999031a20cf74f58c911929dba83d06e9be70f"
+    }
+  ]
+}
